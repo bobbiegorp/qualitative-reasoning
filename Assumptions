@@ -1,0 +1,20 @@
+
+Voorlopige assumptions
+
+- Tab can nr always open and increasing as there is no max (so indirectly allow plus, plus for inflow)
+- (and/or) add turning tab off at any point
+- Assume the VC relatioship is (one) bi directional, or Q relation, correspondence for every value
+- Behaviour of + and - behaviour in Volume is ambigous, assume one of the three or all?
+	- Increase derivative at volume
+	- Stable deriative at volume
+	- Derease derivative at volume
+- maximum value for outflow can have a positive derivative as well, which is considered as "overflow" 
+- Zero cannot have negative derivative assumption
+
+- Verschil tussen state 3 en 16, is 1 state later de kraan dicht doen en ook voor de andere states na 16 is dat ong.
+
+
+
+
+
+

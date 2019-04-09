@@ -1,0 +1,176 @@
+// The container system
+digraph {
+	1 [label="State: 1
+Inflow (0, 0)
+Volume (0, 0)
+ Outflow (0, 0)"]
+	1 -> 2
+	1 -> 3
+	1 -> 4
+	2 [label="State: 2
+Inflow (0, 1)
+Volume (0, 0)
+ Outflow (0, 0)"]
+	2 -> 5
+	2 -> 6
+	2 -> 7
+	2 -> 8
+	3 [label="State: 3
+Inflow (0, 0)
+Volume (0, 1)
+ Outflow (0, 1)"]
+	3 -> 9
+	3 -> 10
+	3 -> 11
+	3 -> 12
+	4 [label="State: 4
+Inflow (0, 1)
+Volume (0, 1)
+ Outflow (0, 1)"]
+	4 -> 13
+	4 -> 14
+	4 -> 15
+	4 -> 16
+	5 [label="State: 5
+Inflow (1, 0)
+Volume (0, 0)
+ Outflow (0, 0)"]
+	6 [label="State: 6
+Inflow (1, 1)
+Volume (0, 0)
+ Outflow (0, 0)"]
+	7 [label="State: 7
+Inflow (1, 0)
+Volume (0, 1)
+ Outflow (0, 1)"]
+	8 [label="State: 8
+Inflow (1, 1)
+Volume (0, 1)
+ Outflow (0, 1)"]
+	9 [label="State: 9
+Inflow (0, 0)
+Volume (1, 0)
+ Outflow (1, 0)"]
+	10 [label="State: 10
+Inflow (0, 1)
+Volume (1, 0)
+ Outflow (1, 0)"]
+	11 [label="State: 11
+Inflow (0, 0)
+Volume (1, 1)
+ Outflow (1, 1)"]
+	12 [label="State: 12
+Inflow (0, 1)
+Volume (1, 1)
+ Outflow (1, 1)"]
+	13 [label="State: 13
+Inflow (1, 0)
+Volume (1, 0)
+ Outflow (1, 0)"]
+	13 -> 17
+	13 -> 18
+	13 -> 20
+	13 -> 21
+	13 -> 14
+	13 -> 23
+	13 -> 15
+	13 -> 16
+	14 [label="State: 14
+Inflow (1, 1)
+Volume (1, 0)
+ Outflow (1, 0)"]
+	14 -> 18
+	14 -> 20
+	14 -> 13
+	14 -> 15
+	14 -> 16
+	15 [label="State: 15
+Inflow (1, 0)
+Volume (1, 1)
+ Outflow (1, 1)"]
+	15 -> 26
+	15 -> 27
+	15 -> 28
+	15 -> 29
+	15 -> 30
+	15 -> 31
+	16 [label="State: 16
+Inflow (1, 1)
+Volume (1, 1)
+ Outflow (1, 1)"]
+	16 -> 27
+	16 -> 28
+	16 -> 30
+	16 -> 31
+	17 [label="State: 17
+Inflow (1, -1)
+Volume (1, -1)
+ Outflow (1, -1)"]
+	17 -> 1
+	18 [label="State: 18
+Inflow (1, 0)
+Volume (1, -1)
+ Outflow (1, -1)"]
+	18 -> 19
+	18 -> 5
+	18 -> 6
+	19 [label="State: 19
+Inflow (1, -1)
+Volume (0, 0)
+ Outflow (0, 0)"]
+	20 [label="State: 20
+Inflow (1, 1)
+Volume (1, -1)
+ Outflow (1, -1)"]
+	20 -> 5
+	20 -> 6
+	21 [label="State: 21
+Inflow (1, -1)
+Volume (1, 0)
+ Outflow (1, 0)"]
+	21 -> 22
+	21 -> 9
+	21 -> 11
+	22 [label="State: 22
+Inflow (0, 0)
+Volume (1, -1)
+ Outflow (1, -1)"]
+	23 [label="State: 23
+Inflow (1, -1)
+Volume (1, 1)
+ Outflow (1, 1)"]
+	23 -> 24
+	23 -> 25
+	24 [label="State: 24
+Inflow (0, 0)
+Volume (2, 0)
+ Outflow (2, 0)"]
+	25 [label="State: 25
+Inflow (0, 0)
+Volume (2, 1)
+ Outflow (2, 1)"]
+	26 [label="State: 26
+Inflow (1, -1)
+Volume (2, 0)
+ Outflow (2, 0)"]
+	27 [label="State: 27
+Inflow (1, 0)
+Volume (2, 0)
+ Outflow (2, 0)"]
+	28 [label="State: 28
+Inflow (1, 1)
+Volume (2, 0)
+ Outflow (2, 0)"]
+	29 [label="State: 29
+Inflow (1, -1)
+Volume (2, 1)
+ Outflow (2, 1)"]
+	30 [label="State: 30
+Inflow (1, 0)
+Volume (2, 1)
+ Outflow (2, 1)"]
+	31 [label="State: 31
+Inflow (1, 1)
+Volume (2, 1)
+ Outflow (2, 1)"]
+}

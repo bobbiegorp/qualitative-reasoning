@@ -211,8 +211,11 @@ def find_transitions(states,current_index=0,state_ID=1,states_mapping={},states_
         volume_value, volume_deriv = volume
         outflow_value, outflow_deriv = outflow
 
-        if current_inflow_deriv == 0 and inflow_deriv == 1:
+        if current_index != 0 and current_inflow_deriv == 0 and inflow_deriv == 1:
             continue
+
+        #print("-"*100)
+        #print(state)
 
         #Derivatives should have continuity, thus not 2 steps apart
         inflow_deriv_diff = current_inflow_deriv - inflow_deriv
@@ -227,6 +230,7 @@ def find_transitions(states,current_index=0,state_ID=1,states_mapping={},states_
         current_volume_precedes = (min(( current_volume_value + current_volume_deriv ),2) == volume_value)
         current_outflow_precedes = (min(( current_outflow_value + current_outflow_deriv),2) == outflow_value)
         #correct_inflow_deriv = current_inflow
+
         if inflow_value != 1 or outflow_value != 1:
             volume_deriv_shift = max(-1,inflow_value - outflow_value)
             expected_volume_deriv = current_volume_deriv + volume_deriv_shift

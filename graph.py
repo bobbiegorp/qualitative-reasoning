@@ -67,6 +67,8 @@ def find_transitions(states):
     states_mapping = {}     #From index in states to state_ID
     states_info = {}             #From state_ID to state info
     transitions = {}     #From state ID to list of state ID
+    states_with_origins = set()
+    states_with_origins.add(1)
 
     states.sort(key=lambda tup: tup[1])
     state_ID = 1
@@ -104,10 +106,10 @@ def find_transitions(states):
             current_volume_precedes = (min(( current_volume_value + current_volume_deriv ),2) == volume_value)
             current_outflow_precedes = (min(( current_outflow_value + current_outflow_deriv),2) == outflow_value)
             #correct_inflow_deriv = current_inflow
-            if current_inflow_value != 1 or current_outflow_value != 1:
-                volume_deriv_shift = max(-1,current_inflow_value - current_outflow_value)
-                expected_volume_deriv_value = volume_deriv + volume_deriv_shift
-                if expected_volume_deriv_value != volume_deriv or volume_deriv != outflow_deriv:
+            if inflow_value != 1 or outflow_value != 1:
+                volume_deriv_shift = max(-1,inflow_value - outflow_value)
+                expected_volume_deriv = current_volume_deriv + volume_deriv_shift
+                if expected_volume_deriv != volume_deriv or volume_deriv != outflow_deriv:
                     continue
             #correct_outflow_deriv =
 
@@ -125,6 +127,7 @@ def find_transitions(states):
                 if other_state_ID== -1:
                     states_mapping[index] = state_ID
                     states_info[state_ID] = state
+                    #other_state_ID = state_ID + 1
                     other_state_ID = state_ID
                     state_ID += 1
 
@@ -132,7 +135,10 @@ def find_transitions(states):
                 if other_state_ID not in list:
                     list.append(other_state_ID)
                     transitions[current_state_ID] = list
-                continue
+
+                    if current_state_ID in states_with_origins:
+                        states_with_origins.add(other_state_ID)
+                #continue
             '''
             current_inflow_follows = (min((inflow_deriv + inflow_value), 1) == current_inflow_value)
             current_volume_follows = (min((volume_deriv + volume_value), 2) == current_volume_value)
@@ -165,8 +171,10 @@ def find_transitions(states):
     print(states_info)
     print(len(states_info))
     print(transitions_counter)
+    print(len(states_with_origins))
+    print(states_with_origins)
 
-    return states_info,transitions
+    return states_info,transitions#,states_with_origins
 
 def create_graph(states,transitions):
     dot = Digraph(comment='The container system')
@@ -187,7 +195,7 @@ def create_graph(states,transitions):
     #dot.edge('B', 'L', constraint='false')
     #print(dot.source)
 
-    dot.render('./container_system.gv', view=True)
+    dot.render('./container_system3.gv', view=True)
 
 
 

@@ -235,7 +235,7 @@ def give_trace(state_1,state_2=None):
     #Intra state
     if state_2 == None:
         full_text = ("Currently at this state, there is " + inflow_text + " as " + inflow_deduction
-                     + " Furthermore, there is " + volume_value_text + " water in the container to which te amount " + volume_deriv_text +
+                     + " Furthermore, there is " + volume_value_text + " water in the container to which the amount " + volume_deriv_text +
                      " as a result of the combination of inflow and the outflow. " + outflow_deriv_text)
     #Inter state, where state_1 is predecessor of state_2
     else:
@@ -327,7 +327,7 @@ def give_trace(state_1,state_2=None):
         print(state_2)
 
         full_text = ("At the predecessor state, there is " + inflow_text + " as " + inflow_deduction +
-                     " Furthermore, there is " + volume_value_text + " water in the container to which te amount " + volume_deriv_text + "."
+                     " Furthermore, there is " + volume_value_text + " water in the container to which the amount " + volume_deriv_text + "."
                       + outflow_deriv_text
                       + "With the transition to the next state," + inflow2_text
                      + "Also, due to the combination of inflow and the outflow of the previous state, there is "  + volume_value_text2

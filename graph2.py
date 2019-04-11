@@ -45,14 +45,6 @@ def reduce_states(all_states):
         elif volume_value != outflow_value:
             continue
 
-        # Derivative check, start with inflow and outvalue value that determine volume derivative, which inturn determines outflow derivative
-        expected_volume_deriv_value = max(-1,inflow_value - outflow_value) #Making sure not -2
-        #if volume_value == 2 and outflow_value == 2:
-        #    print(state)
-        #    print(expected_volume_deriv_value)
-        #    print(volume_deriv)
-        #if ((inflow_value != 1 or outflow_value != 1) and (expected_volume_deriv_value != volume_deriv)) or (volume_deriv != outflow_deriv):
-
         #Since outflow derivative is proportional to volume deriv and there is value correspondence, the derivative of the two follows the same directions
         if (volume_deriv != outflow_deriv):
             continue
@@ -69,11 +61,6 @@ def find_transitions(states,current_index=0,state_ID=1,states_mapping={},states_
     #states_mapping = {}     #From index in states to state_ID
     #states_info = {}             #From state_ID to state info
     #transitions = {}     #From state ID to list of state ID
-    #states_with_origins = set()
-    #states_with_origins.add(1)
-
-    #states.sort(key=lambda tup: tup[1])
-    #state_ID = 1
 
     current_state = states[current_index]
 
@@ -81,11 +68,6 @@ def find_transitions(states,current_index=0,state_ID=1,states_mapping={},states_
     current_inflow_value,current_inflow_deriv = current_inflow
     current_volume_value, current_volume_deriv = current_volume
     current_outflow_value, current_outflow_deriv = current_outflow
-        #initial state
-        #if current_index == 0:
-            #states_mapping[current_index] = state_ID
-            #states[state_ID] = current_state
-            #state_ID += 1
 
     for index,state in enumerate(states):
         if current_index == index:   #state does not transition to itself
@@ -98,9 +80,6 @@ def find_transitions(states,current_index=0,state_ID=1,states_mapping={},states_
 
         #if current_index != 0 and current_inflow_deriv == 0 and inflow_deriv == 1:
         #    continue
-
-        #print("-"*100)
-        #print(state)
 
         #Derivatives should have continuity, thus not 2 steps apart
         inflow_deriv_diff = current_inflow_deriv - inflow_deriv
@@ -130,12 +109,6 @@ def find_transitions(states,current_index=0,state_ID=1,states_mapping={},states_
             if expected_volume_deriv != volume_deriv:
                 continue
             #correct_outflow_deriv =
-
-        #if current_state == ((0, 0), (1, -1), (1, -1)) or current_state == ((0, 0), (1, 0), (1, 0)) or current_state == ((0, 0), (1, 1), (1, 1)):
-        #    print(current_state)
-
-        #if current_state == ((0, 0), (1, -1), (1, -1)) or current_state == ((0, 0), (1, 0), (1, 0)) or current_state == ((0, 0), (1, 1), (1, 1)):
-        #    print(current_state)
 
         current_state_ID = states_mapping.get(current_index, -1)
         other_state_ID = states_mapping.get(index, -1)
@@ -169,7 +142,7 @@ def create_graph(states,transitions):
     for state_ID,info in states.items():
         string_ID = str(state_ID)
         text = "State: " + string_ID + "\nInflow " + str(info[0]) + "\nVolume " + str(info[1]) + "\n Outflow " + str(info[2])
-        dot.node(string_ID, text)#,shape="Box")
+        dot.node(string_ID, text,fontize="100")#,shape="Box")
 
         transitions_list = transitions.get(state_ID,[])
         for trans_state_ID in transitions_list:
@@ -201,10 +174,10 @@ def give_trace(state_1,state_2=None):
         inflow_text = "a steady inflow."
         inflow_deduction = "the tap remains open as it is."
     elif inflow_value == 1 and inflow_deriv == 1:
-        inflow_text = "is an inflow that is starting to increase"
+        inflow_text = "an inflow that is starting to increase"
         inflow_deduction = "the tap is opened further."
     elif inflow_value == 1 and inflow_deriv == -1:
-        inflow_text = "is an inflow that is starting to decrease"
+        inflow_text = "an inflow that is starting to decrease"
         inflow_deduction = "the tap is closing."
 
     if volume_value == 0:
@@ -212,7 +185,7 @@ def give_trace(state_1,state_2=None):
     elif volume_value == 1:
         volume_value_text = "some"
     else:
-        volume_value_text = "maximium amount of"
+        volume_value_text = "maximum amount of"
 
     if volume_deriv == 0:
         volume_deriv_text = "remains stable"
@@ -232,16 +205,16 @@ def give_trace(state_1,state_2=None):
         outflow_deriv_text = "There is " + outflow_value_text  + " outflow of the drain that remains stable. "
     elif outflow_value == 1 and outflow_deriv == 1:
         outflow_value_text = "some"
-        outflow_deriv_text = "This is due to " + outflow_value_text + " outflow of the drain, which will increase to maximium amount of outflow as the container volume reaches it maximium as well. The inflow in this case is greater than the outflow"
+        outflow_deriv_text = "This is due to " + outflow_value_text + " outflow of the drain, which will increase to maximum amount of outflow as the container volume reaches it maximium as well. The inflow in this case is greater than the outflow. "
     elif outflow_value == 1 and outflow_deriv == -1:
         outflow_value_text = "some"
-        outflow_deriv_text = "There is " + outflow_value_text + " outflow, which is decreasing as the water in container is decreasing as well. The outflow is greater than the inflow in this case."
+        outflow_deriv_text = "There is " + outflow_value_text + " outflow, which is decreasing as the water in container is decreasing as well. The outflow is greater than the inflow in this case. "
     elif outflow_value == 2 and outflow_deriv == 0:
         outflow_value_text = "the maximium amount of"
-        outflow_deriv_text = "This is due to " + outflow_value_text + " outflow of the drain that remains stable for a moment as the maximium outflow is greater than the inflow and will prevent the contaner from overflowing "
+        outflow_deriv_text = "This is due to " + outflow_value_text + " outflow of the drain that remains stable for a moment as the maximum outflow is greater than the inflow and will prevent the container from overflowing. "
     elif outflow_value == 2 and outflow_deriv == -1:
         outflow_value_text = "the maximium amount of"
-        outflow_deriv_text = "This is due to " + outflow_value_text + " outflow of the drain, which is greater than the inflow and decreases the amount of volume in the container"
+        outflow_deriv_text = "This is due to " + outflow_value_text + " outflow of the drain, which is greater than the inflow and decreases the amount of volume in the container."
 
     print(state_1)
 
@@ -297,7 +270,7 @@ def give_trace(state_1,state_2=None):
         elif volume_value2 == 1:
             volume_value_text2 = "some"
         else:
-            volume_value_text2 = "maximium amount of"
+            volume_value_text2 = "maximum amount of"
 
         if volume_deriv2 == 0:
             volume_deriv_text2 = "remains stable. "
@@ -326,15 +299,15 @@ def give_trace(state_1,state_2=None):
             outflow_deriv_text2 = "there is " + outflow_value_text + " outflow of the drain that remains stable. "
         elif outflow_value2 == 1 and outflow_deriv2 == 1:
             outflow_value_text2 = "some"
-            outflow_deriv_text2 = "there is " + outflow_value_text + " outflow of the drain, which will increase to maximium amount of outflow as the container volume reaches it maximium as well. The inflow in this case is greater than the outflow. "
+            outflow_deriv_text2 = "there is " + outflow_value_text + " outflow of the drain, which will increase to maximum amount of outflow as the container volume reaches it maximium as well. The inflow in this case is greater than the outflow. "
         elif outflow_value2 == 1 and outflow_deriv2 == -1:
             outflow_value_text2 = "some"
-            outflow_deriv_text2 = "there is " + outflow_value_text + " outflow, which is decreasing as the water in container is decreasing as well. The outflow is greater than the inflow in this case."
+            outflow_deriv_text2 = "there is " + outflow_value_text + " outflow, which is decreasing as the water in container is decreasing as well. The outflow is greater than the inflow in this case. "
         elif outflow_value2 == 2 and outflow_deriv2 == 0:
-            outflow_value_text2 = "the maximium amount of"
-            outflow_deriv_text2 = "there is " + outflow_value_text + " outflow of the drain that remains stable for a moment as the maximium outflow is greater than the inflow and will prevent the contaner from overflowing. "
+            outflow_value_text2 = "the maximum amount of"
+            outflow_deriv_text2 = "there is " + outflow_value_text + " outflow of the drain that remains stable for a moment as the maximum outflow is greater than the inflow and will prevent the container from overflowing. "
         elif outflow_value2 == 2 and outflow_deriv2 == -1:
-            outflow_value_text2 = "the maximium amount of"
+            outflow_value_text2 = "the maximum amount of"
             outflow_deriv_text2 = "there is " + outflow_value_text + " outflow of the drain, which is greater than the inflow and decreases the amount of volume in the container. "
 
         print(state_2)
@@ -366,14 +339,12 @@ if __name__ == "__main__":
     print(states)
     print("Final amount of states: ",len(states))
     print("Amount of transitions: ",transitions_counter)
-    #print(len(states_with_origins))
-    #print(states_with_origins)
 
-    #for state_ID,state in states.items():
-    #    give_trace(state)
-    #for state_ID,list in transitions.items():
-    #    state_1 = states[state_ID]
-    #    for state_ID2 in list:
-    #        state_2 = states[state_ID2]
-    #        give_trace(state_1,state_2)
+    for state_ID,state in states.items():
+        give_trace(state)
+    for state_ID,list in transitions.items():
+        state_1 = states[state_ID]
+        for state_ID2 in list:
+            state_2 = states[state_ID2]
+            give_trace(state_1,state_2)
     #give_intra_state(states[1])

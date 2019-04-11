@@ -8,7 +8,7 @@ Voorlopige assumptions
 	- Increase derivative at volume
 	- Stable deriative at volume
 	- Derease derivative at volume
-- maximum value for outflow can have a positive derivative as well, which is considered as "overflow" 
+- maximum value for outflow can have a positive derivative as well, which is considered as "overflow", but does not happen
 - Zero cannot have negative derivative assumption
 
 - Verschil tussen state 3 en 16, is 1 state later de kraan dicht doen en ook voor de andere states na 16 is dat ong.

@@ -62,7 +62,7 @@ def reduce_states(all_states):
     print("#Number of possible states: ",len(states))
     for state in states:
         print(state)
-
+    print("-" * 200)
     return states
 
 def find_transitions(states,current_index=0,state_ID=1,states_mapping={},states_info={},transitions={}):
@@ -110,6 +110,9 @@ def find_transitions(states,current_index=0,state_ID=1,states_mapping={},states_
         if abs(inflow_deriv_diff) == 2 or abs(volume_deriv_diff) == 2 or abs(outflow_deriv_diff) == 2:
             continue
 
+        #if current_state == ((0, 0), (1, -1), (1, -1)) or current_state == ((0, 0), (1, 0), (1, 0)) or current_state == ((0, 0), (1, 1), (1, 1)):
+        #    print(current_state)
+
         #See if state precedes the other, checking on quantity value shift first then the derivative change as well
         current_inflow_precedes = (min((current_inflow_value + current_inflow_deriv),1) == inflow_value)
         current_volume_precedes = (min(( current_volume_value + current_volume_deriv ),2) == volume_value)
@@ -120,10 +123,19 @@ def find_transitions(states,current_index=0,state_ID=1,states_mapping={},states_
         # Inflow quantity being negative, equal or greater than outflow.
         if inflow_value != 1 or outflow_value != 1:
             volume_deriv_shift = max(-1,inflow_value - outflow_value)
-            expected_volume_deriv = current_volume_deriv + volume_deriv_shift
+            if volume_value == 0 and current_volume_deriv == -1:
+                expected_volume_deriv = 0
+            else:
+                expected_volume_deriv = max(-1,current_volume_deriv + volume_deriv_shift)
             if expected_volume_deriv != volume_deriv:
                 continue
             #correct_outflow_deriv =
+
+        #if current_state == ((0, 0), (1, -1), (1, -1)) or current_state == ((0, 0), (1, 0), (1, 0)) or current_state == ((0, 0), (1, 1), (1, 1)):
+        #    print(current_state)
+
+        #if current_state == ((0, 0), (1, -1), (1, -1)) or current_state == ((0, 0), (1, 0), (1, 0)) or current_state == ((0, 0), (1, 1), (1, 1)):
+        #    print(current_state)
 
         current_state_ID = states_mapping.get(current_index, -1)
         other_state_ID = states_mapping.get(index, -1)
@@ -147,9 +159,10 @@ def find_transitions(states,current_index=0,state_ID=1,states_mapping={},states_
             if other_state_ID not in list:
                 list.append(other_state_ID)
                 transitions[current_state_ID] = list
-                states_mapping, states_info, transitions = find_transitions(states, index, state_ID, states_mapping, states_info, transitions)
+                state_ID,states_mapping, states_info, transitions = find_transitions(states, index, state_ID, states_mapping, states_info, transitions)
 
-    return states_mapping,states_info,transitions#,states_with_origins
+    return state_ID,states_mapping,states_info,transitions
+
 def create_graph(states,transitions):
     dot = Digraph(comment='The container system')
 
@@ -342,7 +355,7 @@ def give_trace(state_1,state_2=None):
 if __name__ == "__main__":
     all_states = generate_states()
     states = reduce_states(all_states)
-    states_mapping, states, transitions = find_transitions(states)
+    state_ID,states_mapping, states, transitions = find_transitions(states)
     create_graph(states,transitions)
 
     print("-" * 100)
@@ -355,11 +368,12 @@ if __name__ == "__main__":
     print("Amount of transitions: ",transitions_counter)
     #print(len(states_with_origins))
     #print(states_with_origins)
-    for state_ID,state in states.items():
-        give_trace(state)
-    for state_ID,list in transitions.items():
-        state_1 = states[state_ID]
-        for state_ID2 in list:
-            state_2 = states[state_ID2]
-            give_trace(state_1,state_2)
+
+    #for state_ID,state in states.items():
+    #    give_trace(state)
+    #for state_ID,list in transitions.items():
+    #    state_1 = states[state_ID]
+    #    for state_ID2 in list:
+    #        state_2 = states[state_ID2]
+    #        give_trace(state_1,state_2)
     #give_intra_state(states[1])
